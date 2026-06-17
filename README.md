@@ -25,6 +25,36 @@ and a bridge from the Lin/Dyer/Muthukumar (JMLR'24) linear augmentation theory t
 | `alpha_report.py`, `bayes_report.py` | data-free HTSR-α model-quality scoring via [wwj](../wwj) (JAX WeightWatcher). |
 | `logs/`, `slurm-logs/`, `ckpts/` | training outputs / Slurm stdout / checkpoints (git-ignored; large). |
 
+## Reproduce
+
+**The paper, from committed data (no GPU).** Every figure, table, and number in
+`paper/paper.pdf` is regenerated from the committed `dataeff/*_results.jsonl` result files
+and `paper/data/facts.json` — nothing is hand-transcribed. Requires Python (`numpy`,
+`matplotlib`) and [`tectonic`](https://tectonic-typesetting.github.io/):
+
+```bash
+cd paper
+bash build.sh            # tangle: data -> figures + macros + tables; weave: tectonic -> paper.pdf
+# tectonic resolution: $TECTONIC, else a local texlive env, else `tectonic` on PATH
+```
+
+**The experiments (GPU).** These produced the `*_results.jsonl` files above and need
+hardware + data the repo can't ship: the converged base checkpoint (≈150 MB, git-ignored),
+prepped brainsets `.h5` data, and one or more H100-class GPUs.
+
+- **Base POYO-MP reproduction** (held-out R²=0.904): the *unmodified*
+  [`nerdslab/poyo`](https://github.com/nerdslab/poyo) repo in its pinned environment
+  (torch ~2.10), exact recipe (global batch 1024, max-LR 0.032, fp32, SparseLamb), on
+  8×H100 — see `dedicated_node/` (single dedicated node) and `modal_poyo_repo.py` (Modal).
+  Running the recipe faithfully in the *pinned* env is what avoids the weight-collapse we
+  hit under newer toolchains.
+- **Transfer + augmentation studies**: `dataeff/run_*.sh` (provision a 1×H100 pod with
+  `dataeff/provision_dataeff.py`), each loading the converged checkpoint and writing one of
+  the `dataeff/*_results.jsonl` files the paper consumes — `run_dataeff.sh` (data
+  efficiency), `run_chronic.sh` (chronic stability), `run_xsub.sh` (cross-subject),
+  `run_dmfc_elapsed.sh` (timing), `run_aug_full.sh` / `run_aug_lowdata.sh` (UnitDropout
+  spectral grids).
+
 ## Data
 
 NAS, prepared by the brainsets pipeline at `/data/datasets/brainsets/processed/<brainset>/`
@@ -96,6 +126,12 @@ modal volume create poyo-probe-data
 modal volume put poyo-probe-data <a few perich + odoherty .h5> /<dirname>/<file>.h5
 modal run modal_probe.py --gpus "A100-80GB,H100,L40S"
 ```
+
+## License
+
+[MIT](LICENSE). The vendored `poyo_harness/` derives from `nerdslab/torch_brain`; POYO and
+the datasets (Perich–Miller, area2_bump, dmfc_rsg) retain their own upstream licenses and
+terms — cite the original papers (see `paper/references.bib`).
 
 Modal uses standard CUDA GPUs (x86_64, sm_80/89/90) → plain PyPI torch, none of the
 sm_121/NGC handling the Spark needs. Verify `COST_PER_GPU_HR` against current pricing.
