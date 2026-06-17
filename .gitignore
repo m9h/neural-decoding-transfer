@@ -1,0 +1,37 @@
+# --- model weights / large training artifacts (regenerable, too big for git) ---
+*.ckpt
+ckpts/
+logs/
+slurm-logs/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+
+# --- virtualenvs ---
+.venv/
+.venv-beam/
+venv/
+env/
+
+# --- stray container / root-owned caches ---
+.cache/
+.config/
+.nv/
+
+# --- LaTeX build intermediates (paper/) ---
+# keep paper.pdf, generated_*.tex, and figures/*.png; drop the rest
+*.aux
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.out
+*.toc
+*.log
+
+# --- OS ---
+.DS_Store

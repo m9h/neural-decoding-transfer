@@ -1,0 +1,117 @@
+diff --git a/configs/defaults.yaml b/configs/defaults.yaml
+index 6fa41fe..0a20a71 100644
+--- a/configs/defaults.yaml
++++ b/configs/defaults.yaml
+@@ -38,3 +38,9 @@ num_workers: 4
+ 
+ # Checkpointing
+ ckpt_path: null  # for resuming training, or loading a model during finetuning
++
++# TRANSFER / finetuning (galaxy-brain-bench §2.5 unit identification). Null = normal training.
++finetune:
++  pretrained_ckpt: null   # path to the reproduced POYO checkpoint (the frozen core)
++  skip_readout: false     # true when the new task's readout differs (new dim/modality)
++  freeze_core: false      # true = optimize only the new unit/session embeddings (+ readout)
+diff --git a/train.py b/train.py
+index 1425434..34e05d3 100644
+--- a/train.py
++++ b/train.py
+@@ -65,19 +65,49 @@ class TrainWrapper(L.LightningModule):
+             if "unit_emb" not in n and "session_emb" not in n
+         ]
+ 
++        # TRANSFER (§2.5 unit identification): when finetuning with freeze_core, freeze the
++        # whole transformer core and optimize ONLY the new unit/session embeddings (+ the
++        # readout, which is NOT in unit_emb/session_emb and thus stays trainable via... see
++        # note). Core stays fixed -> the new dataset is mapped into the pretrained representation.
++        _ft = self.cfg.get("finetune", None)
++        _freeze = bool(_ft is not None and _ft.get("freeze_core", False))
++        if _freeze:
++            for _n, _p in self.model.named_parameters():
++                if "unit_emb" not in _n and "session_emb" not in _n and not _n.startswith("readout"):
++                    _p.requires_grad_(False)
++            remaining_params = [p for n, p in self.model.named_parameters()
++                                if ("readout" in n) and p.requires_grad]
++
++        param_groups = [{"params": special_emb_params, "sparse": True}]
++        if remaining_params:                       # empty under a full freeze with no readout
++            param_groups.append({"params": remaining_params})
+         optimizer = SparseLamb(
+-            [
+-                {"params": special_emb_params, "sparse": True},
+-                {"params": remaining_params},
+-            ],
++            param_groups,
+             lr=max_lr,
+             weight_decay=self.cfg.optim.weight_decay,
+         )
+ 
++        # FAITHFUL-RESUME FIX (galaxy-brain-bench): OneCycle's total_steps must reflect the
++        # FULL run. Lightning's estimated_stepping_batches SHRINKS to the remaining steps on a
++        # ckpt_path resume, which relocates pct_start's peak earlier and corrupts the schedule
++        # (observed: peak moved from epoch 500 -> the resume epoch; val R2 stayed flat). Persist
++        # the value computed on the first (non-resumed) run in log_dir and reuse it on every
++        # resume -> identical curve regardless of restarts. Safe either way: if
++        # estimated_stepping_batches does not shrink, the persisted value just equals it.
++        import os
++        _ts_file = os.path.join(self.cfg.log_dir, "onecycle_total_steps.txt")
++        if os.path.exists(_ts_file):
++            total_steps = int(open(_ts_file).read().strip())
++        else:
++            total_steps = int(self.trainer.estimated_stepping_batches)
++            os.makedirs(self.cfg.log_dir, exist_ok=True)
++            with open(_ts_file, "w") as _f:
++                _f.write(str(total_steps))
++
+         scheduler = torch.optim.lr_scheduler.OneCycleLR(
+             optimizer,
+             max_lr=max_lr,
+-            total_steps=self.trainer.estimated_stepping_batches,
++            total_steps=total_steps,
+             pct_start=self.cfg.optim.lr_decay_start,
+             anneal_strategy="cos",
+             div_factor=1,
+@@ -189,9 +219,20 @@ class DataModule(L.LightningDataModule):
+         self._init_model_vocab(model)
+ 
+     def _init_model_vocab(self, model: POYO):
+-        # TODO: Add code for finetuning situation (when model already has a vocab)
+-        model.unit_emb.initialize_vocab(self.get_unit_ids())
+-        model.session_emb.initialize_vocab(self.get_session_ids())
++        # TRANSFER (§2.5): when finetuning from a pretrained ckpt, the model already carries a
++        # vocab; EXTEND it with the new dataset's units/sessions (random-init) and learn only
++        # those (core frozen via configure_optimizers). Otherwise initialize fresh.
++        # SEAM: load_pretrained restores embedding WEIGHTS; if it does NOT restore the vocab
++        # word->index map (InfiniteVocabEmbedding.vocab is a plain dict, not in state_dict),
++        # call model.unit_emb.initialize_vocab(<pretrained_unit_ids>) BEFORE extend_vocab so
++        # the pretrained rows keep their identities. See TRANSFER.md "vocab persistence".
++        _ft = self.cfg.get("finetune", None)
++        if _ft is not None and _ft.get("pretrained_ckpt", None):
++            model.unit_emb.extend_vocab(self.get_unit_ids(), exist_ok=True)
++            model.session_emb.extend_vocab(self.get_session_ids(), exist_ok=True)
++        else:
++            model.unit_emb.initialize_vocab(self.get_unit_ids())
++            model.session_emb.initialize_vocab(self.get_session_ids())
+ 
+     def get_session_ids(self):
+         return self.train_dataset.recording_ids
+@@ -306,7 +347,18 @@ def main(cfg: DictConfig):
+     data_module = DataModule(cfg=cfg)
+     readout_spec = data_module.readout_spec
+ 
+-    model = hydra.utils.instantiate(cfg.model, readout_spec=readout_spec)
++    _ft = cfg.get("finetune", None)
++    if _ft is not None and _ft.get("pretrained_ckpt", None):
++        # TRANSFER (§2.5): load the pretrained core from the reproduced POYO checkpoint.
++        # skip_readout=True when the new task uses a different readout (e.g. dmfc_rsg's
++        # interval_timing_1d, dim 1) so a fresh readout head is initialized; False when the
++        # readout matches (e.g. area2_bump reuses cursor_velocity_2d, dim 2).
++        model = POYO.load_pretrained(
++            _ft.pretrained_ckpt, readout_spec=readout_spec,
++            skip_readout=_ft.get("skip_readout", False),
++        )
++    else:
++        model = hydra.utils.instantiate(cfg.model, readout_spec=readout_spec)
+     data_module.link_model(model)
+ 
+     # Lightning train wrapper

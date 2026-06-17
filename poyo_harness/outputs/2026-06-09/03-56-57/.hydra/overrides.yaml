@@ -1,0 +1,4 @@
+- gpus=1
+- batch_size=256
+- epochs=30
+- precision=32

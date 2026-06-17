@@ -1,0 +1,29 @@
+# Cross-SUBJECT transfer: §2.5 finetune of the base onto a HELD-OUT monkey (t, never in training)
+# perich center-out session. Reuses cursor_velocity_2d (same readout as the base) -> isolates the
+# unit-identification transfer to a brand-new animal. Session via env POYO_SESSION.
+# Drop into poyo repo as configs/finetune_perich_xsub.yaml.
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml
+  - _self_
+
+batch_size: 16         # small single session; CLI may override. base_lr bumped to keep max_lr~8e-3.
+epochs: 100
+
+dataset:
+  _target_: src.datasets.poyo_perich_session.PoyoPerichSessionDataset
+
+train_transforms:
+  - _target_: torch_brain.transforms.UnitDropout
+    max_units: 300
+    min_units: 30
+    mode_units: 100
+    peak: 4
+
+finetune:
+  pretrained_ckpt: ???   # ckpt for FT, null for scratch (CLI)
+  skip_readout: false    # held-out monkey reuses cursor_velocity_2d -> keep pretrained head
+  freeze_core: true      # CLI sets false for scratch
+
+wandb:
+  run_name: poyo_perich_xsub

@@ -1,0 +1,33 @@
+diff --git a/train.py b/train.py
+index 1425434..fed8333 100644
+--- a/train.py
++++ b/train.py
+@@ -74,10 +74,27 @@ class TrainWrapper(L.LightningModule):
+             weight_decay=self.cfg.optim.weight_decay,
+         )
+ 
++        # FAITHFUL-RESUME FIX (galaxy-brain-bench): OneCycle's total_steps must reflect the
++        # FULL run. Lightning's estimated_stepping_batches SHRINKS to the remaining steps on a
++        # ckpt_path resume, which relocates pct_start's peak earlier and corrupts the schedule
++        # (observed: peak moved from epoch 500 -> the resume epoch; val R2 stayed flat). Persist
++        # the value computed on the first (non-resumed) run in log_dir and reuse it on every
++        # resume -> identical curve regardless of restarts. Safe either way: if
++        # estimated_stepping_batches does not shrink, the persisted value just equals it.
++        import os
++        _ts_file = os.path.join(self.cfg.log_dir, "onecycle_total_steps.txt")
++        if os.path.exists(_ts_file):
++            total_steps = int(open(_ts_file).read().strip())
++        else:
++            total_steps = int(self.trainer.estimated_stepping_batches)
++            os.makedirs(self.cfg.log_dir, exist_ok=True)
++            with open(_ts_file, "w") as _f:
++                _f.write(str(total_steps))
++
+         scheduler = torch.optim.lr_scheduler.OneCycleLR(
+             optimizer,
+             max_lr=max_lr,
+-            total_steps=self.trainer.estimated_stepping_batches,
++            total_steps=total_steps,
+             pct_start=self.cfg.optim.lr_decay_start,
+             anneal_strategy="cos",
+             div_factor=1,

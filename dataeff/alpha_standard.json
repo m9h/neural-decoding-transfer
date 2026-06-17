@@ -1,0 +1,1179 @@
+{
+  "ckpt": "dataeff/aug_standard.ckpt",
+  "summary": {
+    "n_layers": 106,
+    "n_degenerate": 98,
+    "n_fit": 8,
+    "mean_alpha": 1.7793363481760025,
+    "frac_pl_valid": 0.375,
+    "frac_well_trained": 0.375
+  },
+  "layers": [
+    {
+      "layer": "enc_atn.to_q.weight",
+      "shape": [
+        256,
+        128
+      ],
+      "alpha": 2.1967897415161133,
+      "ci_low": 1.9759899377822876,
+      "ci_high": 2.5422420501708984,
+      "pl_valid": true
+    },
+    {
+      "layer": "enc_atn.to_kv.weight",
+      "shape": [
+        512,
+        128
+      ],
+      "alpha": 2.01955509185791,
+      "ci_low": 1.8870919942855835,
+      "ci_high": 2.224701166152954,
+      "pl_valid": false
+    },
+    {
+      "layer": "enc_atn.to_out.weight",
+      "shape": [
+        128,
+        256
+      ],
+      "alpha": 1.7814743518829346,
+      "ci_low": 1.6582227945327759,
+      "ci_high": 1.9763398170471191,
+      "pl_valid": true
+    },
+    {
+      "layer": "enc_ffn.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": 1.5788295269012451,
+      "ci_low": 1.5040839910507202,
+      "ci_high": 1.6906126737594604,
+      "pl_valid": false
+    },
+    {
+      "layer": "enc_ffn.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": 1.3536157608032227,
+      "ci_low": 1.308556318283081,
+      "ci_high": 1.4231199026107788,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.0.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.0.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.0.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.0.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.1.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.1.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.1.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.1.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.2.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.2.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.2.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.2.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.3.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.3.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.3.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.3.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.4.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.4.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.4.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.4.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.5.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.5.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.5.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.5.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.6.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.6.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.6.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.6.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.7.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.7.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.7.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.7.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.8.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.8.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.8.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.8.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.9.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.9.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.9.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.9.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.10.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.10.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.10.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.10.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.11.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.11.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.11.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.11.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.12.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.12.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.12.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.12.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.13.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.13.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.13.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.13.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.14.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.14.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.14.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.14.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.15.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.15.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.15.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.15.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.16.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.16.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.16.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.16.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.17.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.17.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.17.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.17.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.18.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.18.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.18.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.18.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.19.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.19.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.19.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.19.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.20.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.20.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.20.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.20.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.21.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.21.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.21.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.21.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.22.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.22.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.22.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.22.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.23.0.to_qkv.weight",
+      "shape": [
+        1536,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.23.0.to_out.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.23.1.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "proc_layers.23.1.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "dec_atn.to_q.weight",
+      "shape": [
+        256,
+        128
+      ],
+      "alpha": 1.3438267707824707,
+      "ci_low": 1.30573570728302,
+      "ci_high": 1.3858931064605713,
+      "pl_valid": false
+    },
+    {
+      "layer": "dec_atn.to_kv.weight",
+      "shape": [
+        512,
+        128
+      ],
+      "alpha": 2.181718587875366,
+      "ci_low": 2.0225768089294434,
+      "ci_high": 2.4307243824005127,
+      "pl_valid": false
+    },
+    {
+      "layer": "dec_atn.to_out.weight",
+      "shape": [
+        128,
+        256
+      ],
+      "alpha": 1.7788809537887573,
+      "ci_low": 1.6177595853805542,
+      "ci_high": 2.0345261096954346,
+      "pl_valid": true
+    },
+    {
+      "layer": "dec_ffn.1.net.0.weight",
+      "shape": [
+        1024,
+        128
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    },
+    {
+      "layer": "dec_ffn.1.net.3.weight",
+      "shape": [
+        128,
+        512
+      ],
+      "alpha": NaN,
+      "ci_low": NaN,
+      "ci_high": NaN,
+      "pl_valid": false
+    }
+  ]
+}

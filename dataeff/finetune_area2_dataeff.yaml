@@ -1,0 +1,30 @@
+# Data-efficiency finetune config (area2_bump, cursor_velocity_2d readout).
+# Train fraction is set via env POYO_TRAIN_FRACTION (read inside the dataset).
+# Drop into the poyo repo as configs/finetune_area2_dataeff.yaml.
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml
+  - _self_
+
+batch_size: 8             # small single session (~440 train windows); 8 keeps even frac=0.1
+                          # at several batches/epoch (256 -> 0 batches -> OneCycle total_steps=0).
+                          # FIXED across all runs -> controlled ft-vs-scratch comparison.
+epochs: 100               # fixed compute budget; data amount varies via POYO_TRAIN_FRACTION
+
+dataset:
+  _target_: src.datasets.poyo_area2_dataeff.PoyoArea2DataEffDataset
+
+train_transforms:
+  - _target_: torch_brain.transforms.UnitDropout
+    max_units: 300
+    min_units: 30
+    mode_units: 100
+    peak: 4
+
+finetune:
+  pretrained_ckpt: ???    # set on the CLI: <converged ckpt> for FT, null for scratch
+  skip_readout: false     # area2 reuses cursor_velocity_2d -> keep pretrained head
+  freeze_core: true       # set false on the CLI for the scratch baseline
+
+wandb:
+  run_name: poyo_dataeff_area2

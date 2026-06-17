@@ -1,0 +1,35 @@
+# Stage B finetune: dmfc_rsg timing transfer (the Merchant-aligned target). NEW readout head.
+# Drop into poyo repo as configs/finetune_dmfc.yaml. Run:
+#   python train.py --config-name finetune_dmfc.yaml \
+#     data_root=<dmfc processed dir> finetune.pretrained_ckpt=<converged last.ckpt> \
+#     log_dir=<out> gpus=<n> wandb.enable=false
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml   # MUST match the pretrained base architecture
+  - _self_
+
+batch_size: 256
+epochs: 200            # cognitive-timing readout is harder than a reused motor head
+
+dataset:
+  _target_: src.datasets.poyo_dmfc.PoyoDmfcDataset
+
+train_transforms:
+  - _target_: torch_brain.transforms.UnitDropout
+    max_units: 200       # dmfc has ~54 units/session -> smaller cap than perich
+    min_units: 20
+    mode_units: 50
+    peak: 4
+
+# §2.5 unit identification + NEW readout (interval_timing_1d, dim 1)
+finetune:
+  pretrained_ckpt: ???   # REQUIRED: the dedicated-node converged last.ckpt
+  skip_readout: true     # dmfc uses a DIFFERENT readout (timing, dim 1) -> fresh readout head
+  freeze_core: true      # optimize the new unit/session embeddings + the fresh timing readout
+
+wandb:
+  run_name: poyo_finetune_dmfc
+
+# Report: R2(tp) finetune-vs-scratch + wwj/wwjd on the transferred vs base weights.
+# PREREQUISITE: the dmfc_rsg pipeline must emit data.timing (tp as a timestamped channel) -
+# see poyo_dmfc.py + TRANSFER.md "timing target representation".

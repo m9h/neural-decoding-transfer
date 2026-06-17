@@ -1,0 +1,26 @@
+# dmfc_rsg ELAPSED-TIME (time-to-go ramp) transfer. Drop into poyo repo as configs/.
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml
+  - _self_
+
+batch_size: 256        # -> max_lr = base_lr*256 = 8e-3 (the proven LR); dmfc session has enough windows
+epochs: 200
+
+dataset:
+  _target_: src.datasets.poyo_dmfc_elapsed.PoyoDmfcElapsedDataset
+
+train_transforms:
+  - _target_: torch_brain.transforms.UnitDropout
+    max_units: 200
+    min_units: 20
+    mode_units: 50
+    peak: 4
+
+finetune:
+  pretrained_ckpt: ???   # ckpt for FT, null for scratch (set on CLI)
+  skip_readout: true     # timing readout (dim 1) differs from motor -> fresh head
+  freeze_core: true      # set false on CLI for the scratch baseline
+
+wandb:
+  run_name: poyo_dmfc_elapsed

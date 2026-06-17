@@ -1,0 +1,34 @@
+# Stage A finetune: area2_bump (reuses cursor_velocity_2d -> isolates the §2.5 transfer code).
+# Drop into poyo repo as configs/finetune_area2.yaml. Run:
+#   python train.py --config-name finetune_area2.yaml \
+#     data_root=<area2 processed dir> finetune.pretrained_ckpt=<converged last.ckpt> \
+#     log_dir=<out> gpus=<n> wandb.enable=false
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml   # MUST match the pretrained base architecture
+  - _self_
+
+batch_size: 256        # single session; also sets max_lr = optim.base_lr * batch_size
+epochs: 100            # finetune is short vs the 1000-epoch base run
+
+dataset:
+  _target_: src.datasets.poyo_area2.PoyoArea2Dataset
+
+train_transforms:
+  - _target_: torch_brain.transforms.UnitDropout
+    max_units: 300
+    min_units: 30
+    mode_units: 100
+    peak: 4
+
+# §2.5 unit identification from the reproduced POYO-MP checkpoint
+finetune:
+  pretrained_ckpt: ???   # REQUIRED: the dedicated-node converged last.ckpt
+  skip_readout: false    # area2 reuses cursor_velocity_2d -> keep the pretrained readout head
+  freeze_core: true      # optimize ONLY the new unit/session embeddings
+
+wandb:
+  run_name: poyo_finetune_area2
+
+# Report: R2(hand.vel) finetune-vs-scratch (run again with finetune.pretrained_ckpt=null,
+# freeze_core=false for the scratch baseline) -> confirms the freeze/extend_vocab path works.

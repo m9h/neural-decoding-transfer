@@ -1,0 +1,50 @@
+# defaults used for training POYO
+# this file needs to be combined with a model config and a dataset config
+
+# Paths
+# Parent of the per-brainset dirs on the NAS; each brainset class appends its own
+# dirname (e.g. perich_miller_population_2018/). Override with data_root=... if needed.
+data_root: /data/datasets/brainsets/processed
+log_dir: /workspace/logs
+
+# Transforms
+train_transforms: []
+eval_transforms: []
+
+# Training
+epochs: 1000
+batch_size: 128 # global batch size across all GPUs
+eval_epochs: 1  # frequency for doing validation
+eval_batch_size: null  # if null, will use batch_size
+seed: 42  # use to set random seed
+sanity_check_validation: false  # if true, will start the run with validation 
+
+optim:
+  base_lr: 3.125e-5  # scaled linearly by batch size
+  weight_decay: 1e-4
+  lr_decay_start: 0.5  # fraction of epochs before starting LR decay
+
+# Logging
+# Default off so batch jobs never block on a wandb login prompt. Enable with
+# wandb.enable=true (the sbatch wrapper exports WANDB_MODE=offline by default).
+wandb:
+  enable: false
+  entity: null
+  project: poyo
+  run_name: null
+  log_model: false
+
+# GPU and CPU
+# precision=32 to match the paper exactly. We earlier set bf16-mixed for GB10
+# memory/speed, and that is the LEADING SUSPECT for the slow unit_emb collapse
+# (reduced precision weakens the per-unit reinforcement that must outrun
+# weight_decay over hundreds of epochs) — but this is UNCONFIRMED (could instead
+# be the 8-GPU DDP gradient dilution of the sparse embeddings, or torch 2.12).
+# Override precision=bf16-mixed to A/B test. 20 cores -> 8 dataloader workers.
+precision: 32
+nodes: 1
+gpus: 1
+num_workers: 8
+
+# Checkpointing
+ckpt_path: null  # for resuming training, or loading a model during finetuning

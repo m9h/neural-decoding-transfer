@@ -1,0 +1,22 @@
+# Frozen-base chronic-stability eval (no training). Session set via env POYO_SESSION.
+# Drop into the poyo repo as configs/eval_perich.yaml.
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml
+  - _self_
+
+batch_size: 256           # eval-only; stitching sampler tiles dense overlapping windows
+epochs: 1                 # unused by eval_session.py (no fit), kept for config completeness
+
+dataset:
+  _target_: src.datasets.poyo_perich_session.PoyoPerichSessionDataset
+
+# pretrained_ckpt set on CLI -> load_pretrained restores the trained unit/session vocab+weights;
+# extend_vocab(exist_ok=True) on an in-vocab session keeps those trained rows (true frozen eval).
+finetune:
+  pretrained_ckpt: ???
+  skip_readout: false
+  freeze_core: true
+
+wandb:
+  enable: false

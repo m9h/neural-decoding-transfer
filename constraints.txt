@@ -1,0 +1,10 @@
+# Pins for NGC-provided, sm_121-built packages.
+# These MUST NOT be swapped by pip's resolver — the GB10 GPU is sm_121 and
+# PyPI cu wheels only build up to sm_120 (see ~/.claude memory: gb10_ngc_container).
+# If any package below conflicts, the build FAILS LOUDLY rather than silently
+# downgrading torch — which is exactly what we want.
+torch==2.12.0a0+5aff3928d8.nv26.5.50603568
+torchvision==0.27.0a0+6214cb20.nv26.5.50603568
+# ABI-sensitive: torch in this container is built against numpy 2.1.0
+numpy==2.1.0
+pydantic==2.13.4

@@ -1,0 +1,4 @@
+- gpus=1
+- precision=bf16-mixed
+- batch_size=256
+- epochs=50

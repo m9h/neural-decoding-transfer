@@ -1,0 +1,34 @@
+{
+  "_provenance": "Curated scalars from the project log (project_poyo_reproduction_status.md). Each came from a named train.py / bayes_report.py / wwj alpha_report.py run on the named checkpoint in neural-decoding-transfer/ckpts. The per-condition decode CURVES are NOT here -- they are read by generate.py from ../dataeff/*.jsonl and ../dataeff/xsub_all.jsonl, the raw pod pulls. Nothing in the manuscript is hand-transcribed; this file is the only hand-curated data and every number in it is traceable to a logged run.",
+
+  "repro": {
+    "test_r2": 0.9040,
+    "mean_alpha": 1.62,
+    "in_rope_pct": 17,
+    "degen": 98,
+    "n_matrices": 106,
+    "dec_atn_to_kv_alpha": 2.17,
+    "epochs": 1000,
+    "gpus": 8,
+    "global_batch": 1024,
+    "max_lr": 0.032,
+    "params_m": 11.8
+  },
+
+  "transfer": [
+    {"model": "Base (perich, 99 sessions)",        "decode_r2": 0.904, "mean_alpha": 1.62, "in_rope_pct": 17, "degen": 98},
+    {"model": "area2 finetune (frozen core)",       "decode_r2": 0.834, "mean_alpha": 1.62, "in_rope_pct": 17, "degen": 98},
+    {"model": "area2 from scratch",                 "decode_r2": 0.313, "mean_alpha": 3.31, "in_rope_pct": 0,  "degen": 0}
+  ],
+
+  "dmfc": {
+    "ramp_ft": 0.887, "ramp_scratch": 0.900,
+    "const_ft": 0.798, "const_scratch": 0.845,
+    "alpha_ft": 1.62, "alpha_scratch": 2.63
+  },
+
+  "aug_alpha": {
+    "freeze": {"off": 1.779, "standard": 1.779, "aggressive": 1.779},
+    "full":   {"off": 1.770, "standard": 1.767, "aggressive": 1.762}
+  }
+}
