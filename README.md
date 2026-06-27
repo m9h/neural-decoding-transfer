@@ -9,7 +9,11 @@ the showcase/transfer experiments run on the DGX Spark (GB10, sm_121, aarch64) a
 **Headline results** (see `paper/paper.pdf`): faithful POYO-MP reproduction (held-out test
 R²=0.904); foundation-model payoff in data efficiency, 3-year chronic stability, and
 cross-subject transfer to an unseen animal; an honest motor→timing negative-transfer limit;
-and a bridge from the Lin/Dyer/Muthukumar (JMLR'24) linear augmentation theory to a deep model.
+a farthest-domain **cross-species** transfer (monkey motor → rat hippocampus/MEC, decoding 2D
+position through a new head) where the frozen core's gain is a *data-efficiency* effect — **+0.31
+R²** on the data-starved session, **~0** where from-scratch already saturates (session-mean
+**+0.12**, ft R² 0.82–0.94); and a bridge from the Lin/Dyer/Muthukumar (JMLR'24) linear
+augmentation theory to a deep model.
 
 ## Layout
 
@@ -130,8 +134,8 @@ modal run modal_probe.py --gpus "A100-80GB,H100,L40S"
 ## License
 
 [MIT](LICENSE). The vendored `poyo_harness/` derives from `nerdslab/torch_brain`; POYO and
-the datasets (Perich–Miller, area2_bump, dmfc_rsg) retain their own upstream licenses and
-terms — cite the original papers (see `paper/references.bib`).
+the datasets (Perich–Miller, area2_bump, dmfc_rsg, Vollan/Moser) retain their own upstream
+licenses and terms — cite the original papers (see `paper/references.bib`).
 
 Modal uses standard CUDA GPUs (x86_64, sm_80/89/90) → plain PyPI torch, none of the
 sm_121/NGC handling the Spark needs. Verify `COST_PER_GPU_HR` against current pricing.
