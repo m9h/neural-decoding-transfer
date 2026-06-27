@@ -30,5 +30,10 @@
   "aug_alpha": {
     "freeze": {"off": 1.779, "standard": 1.779, "aggressive": 1.779},
     "full":   {"off": 1.770, "standard": 1.767, "aggressive": 1.762}
+  },
+
+  "rodent": {
+    "_note": "Cross-species spatial transfer (Vollan/Moser 2025 rat MEC/hippocampus), monkey-motor base -> 2D allocentric position via a NEW position_2d head. Per-session test R2 is read by generate.py from ../dataeff/vollan_results.jsonl (raw pod pull, run 2026-06-27, pod msywkmbi0qlpv5). The train-window counts below are the only hand-curated rodent scalars: from the same run's log (window_length=1.0s, floored per train interval), they explain the data-scarcity axis.",
+    "windows": {"of_24365_2": 496, "of_24666_1": 1858, "of_25127_1": 1867}
   }
 }

@@ -50,7 +50,13 @@ $\chronicDays$ days of chronic recordings with zero per-day retraining, and adap
 deliberately adversarial test---transferring the motor-pretrained core to a cognitive
 interval-timing task \citep{sohn2019bayesian}---shows neutral-to-negative transfer
 ($\dmfcRampGap$ \rtwo{}) that is robust to how the timing target is represented, mapping the
-edge of the model's competence. Finally, we operationalize the linear-model theory of
+edge of the model's competence. Pushed to the farthest domain---a frozen primate-motor core
+decoding rat entorhinal--hippocampal position across a species, region, and modality gap
+\citep{vollan2025}---transfer reappears, but strictly as a data-efficiency effect (session-mean
+$\rodentDeltaMean$ \rtwo{}, up to $\rodentStarvedDelta$ on the most data-starved session and
+$\rodentRichDelta$ where from-scratch already saturates): the frozen representation substitutes
+for training data wherever the target is expressible by the readout. Finally, we operationalize
+the linear-model theory of
 \citet{lin2024augmentation}---data augmentation as implicit spectral regularization of the
 \emph{feature} covariance---on this deep model. \poyo's UnitDropout is exactly their
 ``random-mask'' augmentation; with a plastic feature extractor it spreads the readout-input
@@ -86,8 +92,11 @@ repository, in its pinned environment, on $\poyoGpus\times$H100 with the exact r
 $\poyoTestRtwo$.
 \item \textbf{Three transfer demonstrations} (\cref{sec:transfer}) that quantify the
 foundation-model payoff---data efficiency, chronic stability over $\chronicDays$ days, and
-cross-subject transfer to an unseen animal---and \textbf{one adversarial test}
-(\cref{sec:timing}) that finds its limit on cognitive timing.
+cross-subject transfer to an unseen animal---\textbf{one adversarial test}
+(\cref{sec:timing}) that finds its limit on cognitive timing, and \textbf{a farthest-domain
+cross-species test} (\cref{sec:rodent}, monkey motor $\to$ rat spatial coding) that together
+show the frozen core's payoff is a data-efficiency effect gated on whether the target is
+expressible by the readout.
 \item \textbf{An empirical bridge} (\cref{sec:aug}) from the linear data-augmentation theory
 of \citet{lin2024augmentation} to a deep neural foundation model: \poyo's UnitDropout
 regularizes the feature-covariance spectrum and buys generalization under data scarcity,
@@ -208,6 +217,60 @@ the motor base)---so $\alpha$ reflects the training regime, and the ``healthy-$\
 correlation is domain-match-mediated, not universal. \poyo's value is cross-session and
 cross-subject alignment of \emph{motor} representations, not the timing computation itself.
 
+\section{The farthest domain: cross-species spatial transfer}
+\label{sec:rodent}
+Timing fails because the \emph{target} is not expressible by a per-timestep readout, not because
+the \emph{domain} is far. To separate these two explanations we push to the farthest point on the
+transfer axis that still has a readout-expressible target---a different species, brain region, and
+behavior at once. We transfer the monkey motor-cortex base to rat entorhinal--hippocampal
+recordings \citep{vollan2025} (Neuropixels in MEC and hippocampus during open-field foraging) and
+decode 2D allocentric position---the grid/place-cell readout---through a \emph{new}
+\texttt{position\_2d} head, on $\rodentNsess$ held-out sessions, again contrasting frozen-core
+finetune against from scratch.
+
+Unlike timing, rat position \emph{is} decodable from spike tokens: from scratch reaches \rtwo{}
+$\rodentScratchMean$ on average, up to $\rodentRichScratch$. And the frozen monkey-motor core does
+transfer across the species gap---finetune \rtwo{} $\rodentFtLo$--$\rodentFtHi$
+(mean $\rodentFtMean$): a frozen primate-motor backbone with only a fresh position head reads out
+rat spatial coding. But the benefit is \emph{not} uniform (\cref{fig:rodent}, \cref{tab:rodent});
+it tracks the from-scratch \emph{deficit}. On the data-starved session ($\rodentStarvedWin$ train
+windows, where scratch reaches only \rtwo{} $\rodentStarvedScratch$) the pretrained core lifts
+decode by $\rodentStarvedDelta$; where scratch already saturates ($\rodentRichWin$ windows,
+\rtwo{} $\rodentRichScratch$) it adds nothing ($\rodentRichDelta$). The session-mean gain is a
+modest $\rodentDeltaMean$, but its \emph{distribution} is the point: \poymp's frozen representation
+buys decode accuracy in proportion to how starved the from-scratch model is.
+
+This reconciles the whole transfer-vs-distance axis. The frozen core's payoff is a
+\emph{data-efficiency} effect---it substitutes for training data---wherever the target is
+expressible by \poyo's per-timestep readout, from motor velocity (\cref{sec:transfer}) to rat
+position here; it is largest under scarcity (matching both the \texttt{area2} data-efficiency curve
+and the augmentation$\times$data-fraction interaction of \cref{sec:aug}), and it is absent on
+cognitive timing (\cref{sec:timing}) for a different reason: there the target itself eludes the
+readout, so neither transfer nor scratch succeeds. Distance per se does not set the sign of
+transfer; readout-expressibility of the target and from-scratch data scarcity do.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.6\textwidth]{fig_rodent.png}
+\caption{\textbf{Cross-species spatial transfer} (monkey motor $\to$ rat MEC/hippocampus),
+decoding 2D position through a new head, on $\rodentNsess$ held-out rat sessions ordered by
+from-scratch baseline. Frozen-core finetune (blue) vs.\ from scratch (red), with $\Delta$
+annotated. The transfer gain is large on the data-starved session (fewest train windows) and
+vanishes where from-scratch already saturates---a data-efficiency effect, not a uniform
+cross-species boost.}
+\label{fig:rodent}
+\end{figure}
+
+\begin{table}[t]
+\centering
+\caption{Cross-species spatial transfer (Vollan/Moser rat, 2D position via a new
+\texttt{position\_2d} head), sorted by from-scratch baseline. The frozen-core finetune gain
+$\Delta$ tracks the from-scratch deficit: largest where data is scarce (fewest train windows),
+negligible where scratch saturates.}
+\label{tab:rodent}
+\poyoRodentTable
+\end{table}
+
 \section{Data augmentation as implicit spectral regularization}
 \label{sec:aug}
 \citet{lin2024augmentation} prove, for linear models, that data augmentation acts as implicit
@@ -301,7 +364,11 @@ embedding vectors recover ${\sim}0.9$ \rtwo{} from $10\%$ of a session, hold it 
 and port to an unseen animal---and the label-free weight-spectrum quality tracks decode quality
 in that regime. The same representation does \emph{not} confer an advantage on cognitive
 interval timing, regardless of how the timing target is framed, marking a concrete boundary of
-its competence and a case where the spectral$\leftrightarrow$decode correspondence inverts.
+its competence and a case where the spectral$\leftrightarrow$decode correspondence inverts. Pushed
+across a full species gap to rat spatial coding (\cref{sec:rodent}), the core transfers
+again---but strictly as a data-efficiency effect, largest where the from-scratch model is
+starved---so what gates transfer is not domain distance but whether the target is expressible by
+\poyo's readout and how scarce the new data is.
 
 The augmentation study connects a clean piece of linear theory \citep{lin2024augmentation} to a
 working deep model and pins down its boundary conditions. The predicted spectral regularization
