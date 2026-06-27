@@ -1,0 +1,30 @@
+# CROSS-SPECIES spatial transfer: §2.5 finetune of the monkey-motor base onto a HELD-OUT rat
+# (Vollan/Moser 2025) entorhinal/hippocampal open-field session, decoding 2D allocentric position
+# via a NEW position_2d readout. The farthest-domain point on the transfer-vs-distance axis
+# (cross-species + cross-region + cross-modality). Session via env POYO_SESSION.
+# Drop into the poyo repo as configs/finetune_vollan.yaml.
+defaults:
+  - defaults.yaml
+  - model: poyo_11.8M.yaml
+  - _self_
+
+batch_size: 32         # open-field sessions have ~500-1900 train windows; CLI may override.
+epochs: 100
+
+dataset:
+  _target_: src.datasets.poyo_vollan_session.PoyoVollanSessionDataset
+
+train_transforms:
+  - _target_: torch_brain.transforms.UnitDropout
+    max_units: 300
+    min_units: 30
+    mode_units: 100
+    peak: 4
+
+finetune:
+  pretrained_ckpt: ???   # ckpt for FT, null for scratch (CLI)
+  skip_readout: true     # NEW position_2d head (base has no position readout) -> init fresh head
+  freeze_core: true      # CLI sets false for scratch; readout head stays trainable either way
+
+wandb:
+  run_name: poyo_vollan_pos
